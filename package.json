@@ -1,0 +1,22 @@
+{
+  "name": "serverless-slinker",
+  "version": "1.0.3",
+  "description": "A bare bones Serverless Framework project for use in building slinker.io",
+  "author": "Serverless.com",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superfly72/slinker.io.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "aws-sdk": "2.4.2",
+    "dynamodb-local": "0.0.22",
+    "jest": "^23.5.0",
+    "lambda-tester": "^3.5.0"
+  }
+}
