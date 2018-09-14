@@ -1,0 +1,8 @@
+{
+  "resource": "/",
+  "path": "/slink",
+  "httpMethod": "GET",
+  "pathParameters": {
+    "uid": "tbabNfZkO7iIRNE"
+  }
+}

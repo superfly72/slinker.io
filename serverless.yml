@@ -4,13 +4,55 @@ tenant: superfly72
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs8.10
   memorySize: 512 # optional, in MB, default is 1024
   timeout: 10 # optional, in seconds, default is 6
   versionFunctions: false # optional, default is true
+  environment:
+    DYNAMODB_TABLE: Slink
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+resources:
+  Resources:
+    SlinkDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: uid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+
+
+package:
+  exclude:
+    - test/**
+    - scripts/**
+    - .idea/**
+
 
 plugins:
-  - serverless-dynamodb-local
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: www.slinker.link
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
 
 functions:
   createSlink:
@@ -19,11 +61,11 @@ functions:
       - http:
           path: slink
           method: post
-  retrieveSlink:
+  getSlink:
     handler: handler.get
     events:
       - http:
-          path: slink/{id}
+          path: slink/{uid}
           method: get
 
 

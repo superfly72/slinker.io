@@ -1,0 +1,18 @@
+{
+  "resource": "/",
+  "path": "/slink",
+  "httpMethod": "POST",
+  "body": {
+    "intent": "BLACKBOOK",
+    "payload": {
+      "blackbooks": [
+        "horsey1",
+        "horsey2",
+        "horsey3"
+      ],
+      "url": "http://jimbob"
+    }
+  }
+}
+
+
